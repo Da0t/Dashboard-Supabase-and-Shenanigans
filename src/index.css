@@ -1,0 +1,102 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F3EFE9;
+  color: #1C1008;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Layout ──────────────────────────────────────── */
+.app { max-width: 1440px; margin: 0 auto; padding: 24px; }
+
+/* ── Header ──────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #E2D9CF;
+}
+
+.logo {
+  background: #7B1E35;
+  border: 2.5px solid #C9A84C;
+  border-radius: 50px;
+  padding: 8px 22px;
+  box-shadow: 0 4px 16px rgba(123,30,53,0.18);
+}
+.logo-name { font-family: Georgia, serif; font-size: 18px; font-weight: 700; color: #C9A84C; line-height: 1.2; }
+.logo-sub  { font-family: Georgia, serif; font-size: 9px; color: rgba(201,168,76,0.7); letter-spacing: 1px; }
+
+.header-right { text-align: right; }
+.header-title { font-size: 20px; font-weight: 700; color: #1C1008; margin-bottom: 6px; }
+
+.live-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600; color: #2B7A7A;
+  background: rgba(43,122,122,0.1); border: 1px solid rgba(43,122,122,0.3);
+  padding: 3px 10px; border-radius: 20px;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #2B7A7A; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* ── Cards ───────────────────────────────────────── */
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E2D9CF;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(28,16,8,0.06), 0 4px 12px rgba(28,16,8,0.04);
+}
+.card-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: #A8998C; margin-bottom: 12px;
+}
+
+/* ── KPI cards ───────────────────────────────────── */
+.kpi { position: relative; overflow: hidden; }
+.kpi::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--accent, #7B1E35);
+}
+.kpi-val {
+  font-size: 32px; font-weight: 800; color: var(--accent, #7B1E35);
+  letter-spacing: -1.5px; line-height: 1; margin-bottom: 6px;
+}
+.kpi-sub { font-size: 12px; color: #A8998C; margin-top: 4px; }
+.kpi-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; padding: 2px 9px;
+  border-radius: 20px; margin-top: 8px;
+}
+.up   { background: rgba(220,38,38,0.08);  color: #DC2626; }
+.down { background: rgba(22,163,74,0.08);  color: #16A34A; }
+.flat { background: rgba(168,153,140,0.12); color: #A8998C; }
+
+/* ── Toggle ──────────────────────────────────────── */
+.toggle {
+  display: flex; background: #F3EFE9;
+  border: 1px solid #E2D9CF; border-radius: 6px; overflow: hidden;
+}
+.tbtn { background: none; border: none; padding: 4px 14px; font-size: 11px; font-weight: 600; color: #A8998C; cursor: pointer; font-family: inherit; }
+.tbtn.on { background: #7B1E35; color: #fff; }
+
+/* ── Grids ───────────────────────────────────────── */
+.g5  { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 14px; }
+.g21 { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px; }
+.g11 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.mb  { margin-bottom: 14px; }
+
+/* ── States ──────────────────────────────────────── */
+.empty { display: flex; align-items: center; justify-content: center; height: 160px; color: #A8998C; font-size: 13px; }
+.loading { display: flex; align-items: center; justify-content: center; height: 300px; gap: 8px; color: #A8998C; }
+.ld { width: 8px; height: 8px; border-radius: 50%; animation: blink 1.2s ease-in-out infinite; }
+.ld:nth-child(1) { background: #7B1E35; }
+.ld:nth-child(2) { background: #C9A84C; animation-delay:.2s; }
+.ld:nth-child(3) { background: #2B7A7A; animation-delay:.4s; }
+
+@media(max-width:1200px) { .g5{grid-template-columns:repeat(3,1fr)} .g21{grid-template-columns:1fr} }
+@media(max-width:768px)  { .g5{grid-template-columns:1fr 1fr} .g11{grid-template-columns:1fr} .app{padding:14px} }
