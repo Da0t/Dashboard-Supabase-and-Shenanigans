@@ -35,7 +35,12 @@ function KPI({ label, value, accent, details }) {
 
 export default function App() {
   const [tab, setTab] = useState('dashboard')
-  const { receipts, loading, error } = useReceipts()
+  const [year, setYear] = useState('all')
+  const { receipts: allReceipts, loading, error } = useReceipts()
+
+  const years = [...new Set(allReceipts.map(r => (r.date || r.created_at || '').slice(0, 4)).filter(Boolean))].sort().reverse()
+  const receipts = year === 'all' ? allReceipts : allReceipts.filter(r => (r.date || r.created_at || '').startsWith(year))
+
   const { total, count, avg, thisWeek, wowPct, topMonth, lowMonth, maxTx, minTx } = kpis(receipts)
 
   return (
@@ -47,25 +52,47 @@ export default function App() {
         </div>
         <div className="header-right">
           <div className="header-title">Expense Dashboard</div>
-          <div style={{ display: 'flex', gap: 4, marginTop: 8 }}>
-            {['dashboard', 'summary'].map(t => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                style={{
-                  background: tab === t ? '#7B1E35' : 'transparent',
-                  color: tab === t ? '#fff' : '#A8998C',
-                  border: `1px solid ${tab === t ? '#7B1E35' : '#E2D9CF'}`,
-                  borderRadius: 6,
-                  padding: '4px 16px',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  fontFamily: 'inherit',
-                  textTransform: 'capitalize',
-                }}
-              >{t}</button>
-            ))}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
+            <div style={{ display: 'flex', gap: 4 }}>
+              {['dashboard', 'summary'].map(t => (
+                <button
+                  key={t}
+                  onClick={() => setTab(t)}
+                  style={{
+                    background: tab === t ? '#7B1E35' : 'transparent',
+                    color: tab === t ? '#fff' : '#A8998C',
+                    border: `1px solid ${tab === t ? '#7B1E35' : '#E2D9CF'}`,
+                    borderRadius: 6,
+                    padding: '4px 16px',
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                    textTransform: 'capitalize',
+                  }}
+                >{t}</button>
+              ))}
+            </div>
+            <div style={{ width: 1, height: 20, background: '#E2D9CF' }} />
+            <div style={{ display: 'flex', gap: 4 }}>
+              {['all', ...years].map(y => (
+                <button
+                  key={y}
+                  onClick={() => setYear(y)}
+                  style={{
+                    background: year === y ? '#F3EFE9' : 'transparent',
+                    color: year === y ? '#1C1008' : '#A8998C',
+                    border: `1px solid ${year === y ? '#C9A84C' : '#E2D9CF'}`,
+                    borderRadius: 6,
+                    padding: '4px 12px',
+                    fontSize: 12,
+                    fontWeight: year === y ? 700 : 500,
+                    cursor: 'pointer',
+                    fontFamily: 'inherit',
+                  }}
+                >{y === 'all' ? 'All' : y}</button>
+              ))}
+            </div>
           </div>
         </div>
       </header>
